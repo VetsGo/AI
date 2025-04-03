@@ -5,8 +5,8 @@ from aiogram.fsm.context import FSMContext
 
 from database import get_categories, get_cars_by_category, get_car_info
 from keyboards import get_categories_keyboard, get_cars_keyboard, get_currency_keyboard
-from states import RentalStates
-from utils import get_exchange_rate
+from states import RentalStates, WeatherStates
+from utils import get_exchange_rate, get_weather
 
 router = Router()
 
@@ -19,15 +19,40 @@ async def cmd_start(message: Message):
     try:
         await message.answer(f"Вітаю вас {user_name}!")
         
-        categories = get_categories()
-        keyboard = get_categories_keyboard(categories)
-
-        await message.answer(
-            "Яка категорія автомобілів вас цікавить?", 
-            reply_markup=keyboard
+        help_text = (
+            "Доступні команди:\n\n"
+            "🚗 /cars - Перегляд та оренда автомобілів різних категорій\n"
+            "🌤️ /weather - Отримання інформації про погоду в обраному місті"
         )
+        
+        await message.answer(help_text)
     except TelegramForbiddenError:
         print(f"Користувач {message.from_user.id} заблокував бота.")
+
+@router.message(Command("cars"))
+async def cmd_cars(message: Message):
+    """Обробник команди /cars"""
+    categories = get_categories()
+    keyboard = get_categories_keyboard(categories)
+
+    await message.answer(
+        "Яка категорія автомобілів вас цікавить?", 
+        reply_markup=keyboard
+    )
+
+@router.message(Command("weather"))
+async def cmd_weather(message: Message, state: FSMContext):
+    """Обробник команди /weather"""
+    await message.answer("Введіть місто, щоб отримати погоду")
+    await state.set_state(WeatherStates.waiting_for_city)
+
+@router.message(WeatherStates.waiting_for_city)
+async def handle_city(message: Message, state: FSMContext):
+    """Обробник введення міста для погоди"""
+    city = message.text
+    weather_info = get_weather(city)
+    await message.answer(weather_info)
+    await state.clear()
 
 @router.message(F.text.in_(get_categories()))
 async def handle_category(message: Message):

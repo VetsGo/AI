@@ -5,3 +5,7 @@ class RentalStates(StatesGroup):
     waiting_for_days = State()
     waiting_for_currency = State()
     waiting_for_confirmation = State()
+
+class WeatherStates(StatesGroup):
+    """Стани для отримання погоди"""
+    waiting_for_city = State()
