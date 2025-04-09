@@ -13,8 +13,8 @@ def init_db():
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS cars (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                car TEXT NOT NULL,
                 category TEXT NOT NULL,
+                car TEXT NOT NULL,
                 price REAL NOT NULL,
                 image_url TEXT
             )
@@ -46,7 +46,33 @@ def init_db():
         logger.error(f"Помилка при ініціалізації бази даних: {str(e)}")
         conn.rollback()
 
+#def seed_cars_data():
+#    """Заповнення таблиці cars початковими даними"""
+#    sample_cars = [
+#        ("Економ клас", "Ford Fiesta", 120, "https://megarent.ua/rent-ford-fiesta-hatchback/ford-fiesta-238.png"),
+#        ("Економ клас", "Ford Focus", 158, "https://megarent.ua/rent-ford-focus/ford-focus-207.png"),
+#        ("Економ клас", "Kia Forte", 183, "https://megarent.ua/rent-kia-forte-b-s/kia-forte-492.png"),
+#        ("Бізнес клас", "Audi A4", 210, "https://megarent.ua/rent-audi-a4-b9/audi-a4-395.png"),
+#        ("Бізнес клас", "BMW 525d G30", 230, "https://megarent.ua/rent-bmw-525d-g30/bmw-525d-g30-477.png"),
+#        ("Бізнес клас", "Mercedes Benz E220d", 271, "https://megarent.ua/rent-mercedes-benz-e220d-2020/mercedes-benz-e220d-476.png"),
+#        ("Позашляховики", "Mitsubishi Outlander", 388, "https://megarent.ua/rent-mitsubishi-outlander/mitsubishi-outlander-198.png"),
+#        ("Позашляховики", "Ford F150", 410, "https://megarent.ua/rent-ford-f150/ford-f150-430.png"),
+#        ("Позашляховики", "RAM 1500 TRX Mammoth 900", 485, "https://megarent.ua/rent-trx-mammoth-900/ram-1500-trx-mammoth-900-517.png")
+#    ]
+#    
+#    try:
+#        cursor.executemany(
+#            "INSERT INTO cars (category, car, price, image_url) VALUES (?, ?, ?, ?)",
+#            sample_cars
+#        )
+#        conn.commit()
+#        logger.info("Таблицю cars успішно заповнено тестовими даними.")
+#    except Exception as e:
+#        logger.error(f"Помилка при заповненні таблиці cars: {str(e)}")
+#        conn.rollback()
+
 init_db()
+#seed_cars_data()
 
 def get_categories() -> List[str]:
     """Отримання всіх категорій автомобілів"""
