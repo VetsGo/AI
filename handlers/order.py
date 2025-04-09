@@ -2,6 +2,7 @@ from aiogram import Router, F
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 import logging
+import re
 
 from database import get_car_price, get_categories
 from utils import get_exchange_rate
@@ -50,6 +51,12 @@ async def handle_order_phone(message: Message, state: FSMContext):
     user_name = message.from_user.first_name
     phone = message.text
     logger.info(f"Користувач {user_name} ввів номер телефону для замовлення: {phone}")
+    
+    phone_pattern = r'^\+380\d{9}$'
+    if not re.match(phone_pattern, phone):
+        await message.answer("Номер телефону повинен бути у форматі +380XXXXXXXXX. Будь ласка, введіть правильний номер:")
+        logger.warning(f"Користувач {user_name} ввів номер телефону в неправильному форматі: {phone}")
+        return
     
     await state.update_data(phone=phone)
     
@@ -127,7 +134,7 @@ async def handle_order_delivery(message: Message, state: FSMContext):
         
         await message.bot.send_invoice(
             chat_id=message.chat.id,
-            title="Оплата автомобілів",
+            title="оплатою автомобіля",
             description=f"Оплата замовлення:\n{items_description}",
             payload=f"order:{customer_name}:{phone}:{delivery}:{currency}",
             provider_token=PAYMENT_TOKEN,
