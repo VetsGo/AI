@@ -5,8 +5,8 @@ from aiogram.fsm.context import FSMContext
 import logging
 import re
 
-from database import add_new_car, remove_car, get_all_cars
-from states import AdminStates
+from database.database import add_new_car, remove_car, get_all_cars
+from states.states import AdminStates
 
 router = Router()
 logger = logging.getLogger(__name__)

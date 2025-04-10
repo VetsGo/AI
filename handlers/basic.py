@@ -3,8 +3,8 @@ from aiogram.filters import Command
 from aiogram.types import Message
 import logging
 from aiogram.exceptions import TelegramForbiddenError
-from database import get_categories
-from keyboards import get_categories_keyboard
+from database.database import get_categories
+from keyboards.keyboards import get_categories_keyboard
 
 router = Router()
 logger = logging.getLogger(__name__)

@@ -4,11 +4,11 @@ from aiogram.fsm.context import FSMContext
 import logging
 import re
 
-from database import get_car_price, get_categories
-from utils import get_exchange_rate
-from keyboards import get_currency_keyboard, get_delivery_keyboard, get_categories_keyboard
-from states import CartStates, OrderStates
-from config import PAYMENT_TOKEN
+from database.database import get_car_price, get_categories
+from utils.utils import get_exchange_rate
+from keyboards.keyboards import get_currency_keyboard, get_delivery_keyboard, get_categories_keyboard
+from states.states import CartStates, OrderStates
+from config.config import PAYMENT_TOKEN
 from aiogram.types import LabeledPrice
 
 router = Router()

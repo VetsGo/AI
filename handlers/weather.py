@@ -4,8 +4,8 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 import logging
 
-from states import WeatherStates
-from utils import get_weather
+from states.states import WeatherStates
+from utils.utils import get_weather
 
 router = Router()
 logger = logging.getLogger(__name__)

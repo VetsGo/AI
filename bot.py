@@ -1,9 +1,9 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 
-from config import API_TOKEN, storage
+from config.config import API_TOKEN, storage
 from handlers import router
-from menu import set_bot_commands
+from utils.menu import set_bot_commands
 
 async def main():
     """Основна функція для запуску бота"""

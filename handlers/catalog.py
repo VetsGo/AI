@@ -3,8 +3,8 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 import logging
 
-from database import get_categories, get_cars_by_category, get_car_info
-from keyboards import get_categories_keyboard, get_cars_keyboard, get_add_to_cart_keyboard
+from database.database import get_categories, get_cars_by_category, get_car_info
+from keyboards.keyboards import get_categories_keyboard, get_cars_keyboard, get_add_to_cart_keyboard
 
 router = Router()
 logger = logging.getLogger(__name__)

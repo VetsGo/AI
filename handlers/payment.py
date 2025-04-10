@@ -4,8 +4,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types.message import ContentType
 import logging
 
-from database import add_customer, create_order, get_categories
-from keyboards import get_categories_keyboard
+from database.database import add_customer, create_order, get_categories
+from keyboards.keyboards import get_categories_keyboard
 
 router = Router()
 logger = logging.getLogger(__name__)
