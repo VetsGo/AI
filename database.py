@@ -178,3 +178,40 @@ def find_customer_by_phone(phone: str) -> Optional[Dict[str, Any]]:
             'phone': result[2]
         }
     return None
+
+def add_new_car(category: str, car: str, price: float, image_url: str) -> bool:
+    """Додавання нового автомобіля в базу даних"""
+    try:
+        cursor.execute(
+            "INSERT INTO cars (category, car, price, image_url) VALUES (?, ?, ?, ?)",
+            (category, car, price, image_url)
+        )
+        conn.commit()
+        logger.info(f"Додано новий автомобіль: {car} в категорію {category}")
+        return True
+    except Exception as e:
+        logger.error(f"Помилка при додаванні автомобіля: {str(e)}")
+        conn.rollback()
+        return False
+
+def remove_car(car: str) -> bool:
+    """Видалення автомобіля з бази даних"""
+    try:
+        cursor.execute("DELETE FROM cars WHERE car = ?", (car,))
+        if cursor.rowcount > 0:
+            conn.commit()
+            logger.info(f"Видалено автомобіль: {car}")
+            return True
+        else:
+            logger.warning(f"Автомобіль {car} не знайдено в базі даних")
+            return False
+    except Exception as e:
+        logger.error(f"Помилка при видаленні автомобіля: {str(e)}")
+        conn.rollback()
+        return False
+
+def get_all_cars() -> List[str]:
+    """Отримання списку всіх автомобілів"""
+    cursor.execute("SELECT car FROM cars ORDER BY car")
+    cars = cursor.fetchall()
+    return [car[0] for car in cars]

@@ -16,3 +16,11 @@ class OrderStates(StatesGroup):
     waiting_for_currency = State()
     waiting_for_delivery = State()
     waiting_for_payment = State()
+
+class AdminStates(StatesGroup):
+    """Стани для адміністративних функцій"""
+    waiting_for_category = State()
+    waiting_for_car_name = State() 
+    waiting_for_price = State()
+    waiting_for_image_url = State()
+    waiting_for_car_to_remove = State()
